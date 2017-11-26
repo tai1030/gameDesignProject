@@ -14,6 +14,11 @@ public class PlayerMovement : MonoBehaviour
 
 	bool canMove = true;												//Can the player move?
 
+    public KeyCode keyUP;
+    public KeyCode keyDown;
+    public KeyCode keyLeft;
+    public KeyCode keyRight;
+
 	//Reset() defines the default values for properties in the inspector
 	void Reset ()
 	{
@@ -25,18 +30,20 @@ public class PlayerMovement : MonoBehaviour
 	//Move with physics so the movement code goes in FixedUpdate()
 	void FixedUpdate ()
 	{
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 		//If the player cannot move, leave
 		if (!canMove)
 			return;
 
 		//Remove any Y value from the desired move direction
-		MoveDirection.Set (MoveDirection.x, 0, MoveDirection.z);
+        MoveDirection.Set (x, 0, z);
 		//Move the player using the MovePosition() method of its rigidbody component. This moves the player is a more
 		//physically accurate way than transform.Translate() does
 		rigidBody.MovePosition (transform.position + MoveDirection.normalized * speed * Time.deltaTime);
 
 		//Remove any Y value from the desired look direction
-		LookDirection.Set (LookDirection.x, 0, LookDirection.z);
+		LookDirection.Set (x, 0, z);
 		//Rotate the player using the MoveRotation() method of its rigidbody component. This rotates the player is a more
 		//physically accurate way than transform.Rotate() does. We also use the LookRotation() method of the Quaternion
 		//class to help use convert our euler angles into a quaternion
