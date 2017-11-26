@@ -48,7 +48,7 @@ public class PlayerInputPC : MonoBehaviour
 		if (pauseMenu != null && pauseMenu.IsPaused)
 			return false;
 		//If this player isn't the player assigned to the GameManager, then this player cannot update
-		if (GameManager.Instance.Player == null || GameManager.Instance.Player.transform != transform)
+		if (GameManager.Instance == null || GameManager.Instance.Player == null || GameManager.Instance.Player.transform != transform)
 			return false;
 		//If the above two statements aren't true, then the player can update
 		return true;

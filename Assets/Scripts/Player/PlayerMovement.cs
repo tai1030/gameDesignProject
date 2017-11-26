@@ -14,11 +14,6 @@ public class PlayerMovement : MonoBehaviour
 
 	bool canMove = true;												//Can the player move?
 
-    public KeyCode keyUP;
-    public KeyCode keyDown;
-    public KeyCode keyLeft;
-    public KeyCode keyRight;
-
 	//Reset() defines the default values for properties in the inspector
 	void Reset ()
 	{
@@ -30,14 +25,25 @@ public class PlayerMovement : MonoBehaviour
 	//Move with physics so the movement code goes in FixedUpdate()
 	void FixedUpdate ()
 	{
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+		float x = 0.0f;
+		float z = 0.0f;
 		//If the player cannot move, leave
 		if (!canMove)
 			return;
-
+		//Enhace Up/Down + Right/Left pressed same time
+		if (Input.GetKey (KeyCode.A) || Input.GetKey (KeyCode.D)) {
+			x = Input.GetAxis ("Horizontal");
+		} else if (Input.GetKey (KeyCode.W) || Input.GetKey (KeyCode.S)) {
+			z = Input.GetAxis("Vertical");
+		}
+		//Only allow four direction
+		if (x * x > z * z) {
+			z = 0.0f;
+		} else {
+			x = 0.0f;
+		}
 		//Remove any Y value from the desired move direction
-        MoveDirection.Set (x, 0, z);
+		MoveDirection.Set (x, 0, z);
 		//Move the player using the MovePosition() method of its rigidbody component. This moves the player is a more
 		//physically accurate way than transform.Translate() does
 		rigidBody.MovePosition (transform.position + MoveDirection.normalized * speed * Time.deltaTime);
@@ -47,7 +53,9 @@ public class PlayerMovement : MonoBehaviour
 		//Rotate the player using the MoveRotation() method of its rigidbody component. This rotates the player is a more
 		//physically accurate way than transform.Rotate() does. We also use the LookRotation() method of the Quaternion
 		//class to help use convert our euler angles into a quaternion
-		rigidBody.MoveRotation (Quaternion.LookRotation (LookDirection));
+		if (LookDirection != Vector3.zero) {
+			rigidBody.MoveRotation (Quaternion.LookRotation (LookDirection));
+		}
 		//Set the IsWalking paramter of the animator. If the move direction has any magnitude (amount), then the player is walking
 		animator.SetBool ("IsWalking", MoveDirection.sqrMagnitude > 0);
     }
