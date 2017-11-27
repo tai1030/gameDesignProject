@@ -14,6 +14,11 @@ public class PlayerMovement : MonoBehaviour
 
 	bool canMove = true;												//Can the player move?
 
+	[SerializeField] public KeyCode KeyUp, KeyDown, KeyLeft, KeyRight, KepDrop;
+
+	//Prefabs
+	public GameObject bombPrefab;
+
 	//Reset() defines the default values for properties in the inspector
 	void Reset ()
 	{
@@ -22,43 +27,77 @@ public class PlayerMovement : MonoBehaviour
 		rigidBody = GetComponent <Rigidbody> ();
 	}
 
+	// Update is called once per frame
+	void Update() {
+		FixedUpdate();
+	}
+
 	//Move with physics so the movement code goes in FixedUpdate()
 	void FixedUpdate ()
 	{
-		float x = 0.0f;
-		float z = 0.0f;
 		//If the player cannot move, leave
 		if (!canMove)
 			return;
-		//Enhace Up/Down + Right/Left pressed same time
-		if (Input.GetKey (KeyCode.A) || Input.GetKey (KeyCode.D)) {
-			x = Input.GetAxis ("Horizontal");
-		} else if (Input.GetKey (KeyCode.W) || Input.GetKey (KeyCode.S)) {
-			z = Input.GetAxis("Vertical");
-		}
-		//Only allow four direction
-		if (x * x > z * z) {
-			z = 0.0f;
-		} else {
-			x = 0.0f;
-		}
-		//Remove any Y value from the desired move direction
-		MoveDirection.Set (x, 0, z);
-		//Move the player using the MovePosition() method of its rigidbody component. This moves the player is a more
-		//physically accurate way than transform.Translate() does
-		rigidBody.MovePosition (transform.position + MoveDirection.normalized * speed * Time.deltaTime);
 
-		//Remove any Y value from the desired look direction
-		LookDirection.Set (x, 0, z);
-		//Rotate the player using the MoveRotation() method of its rigidbody component. This rotates the player is a more
-		//physically accurate way than transform.Rotate() does. We also use the LookRotation() method of the Quaternion
-		//class to help use convert our euler angles into a quaternion
-		if (LookDirection != Vector3.zero) {
-			rigidBody.MoveRotation (Quaternion.LookRotation (LookDirection));
+		//Depending on the player number, use different input for moving
+		UpdatePlayerMovement();
+	}
+
+	/// <summary>
+	/// Updates Player 1's movement and facing rotation using the WASD keys and drops bombs using Space
+	/// </summary>
+	private void UpdatePlayerMovement() {
+		if (Input.GetKey (KeyUp)) { //Up movement
+			Move (Vector3.forward);
+			rigidBody.rotation = Quaternion.Euler (0, 0, 0);
+			animator.SetBool ("IsWalking", true);
+		} else if (Input.GetKey (KeyLeft)) { //Left movement
+			Move (Vector3.left);
+			rigidBody.rotation = Quaternion.Euler (0, 270, 0);
+			animator.SetBool ("IsWalking", true);
+		} else if (Input.GetKey (KeyDown)) { //Down movement
+			Move (Vector3.back);
+			rigidBody.rotation = Quaternion.Euler (0, 180, 0);
+			animator.SetBool ("IsWalking", true);
+		} else if (Input.GetKey (KeyRight)) { //Right movement
+			Move (Vector3.right);
+			rigidBody.rotation = Quaternion.Euler (0, 90, 0);
+			animator.SetBool ("IsWalking", true);
 		}
-		//Set the IsWalking paramter of the animator. If the move direction has any magnitude (amount), then the player is walking
-		animator.SetBool ("IsWalking", MoveDirection.sqrMagnitude > 0);
-    }
+
+		if (Input.GetKeyDown(KepDrop)) { //Drop bomb
+			DropBomb();
+		}
+	}
+
+	public void Move(Vector3 move){
+		rigidBody.position += move * speed * Time.deltaTime;
+	}
+
+	/// <summary>
+	/// Drops a bomb beneath the player
+	/// </summary>
+	private void DropBomb() {
+		if (bombPrefab) { //Check if bomb prefab is assigned first
+			// Create new bomb and snap it to a tile
+			Instantiate(bombPrefab,
+				new Vector3(Mathf.RoundToInt(rigidBody.position.x), bombPrefab.transform.position.y, Mathf.RoundToInt(rigidBody.position.z)),
+				bombPrefab.transform.rotation);
+		}
+	}
+
+	public void OnTriggerEnter(Collider other) {
+		if(other.tag == "Enemy"){
+			Debug.Log(this.gameObject.name);
+		}
+		if (other.CompareTag("Explosion")) {
+			Debug.Log("Player hit by explosion!");
+
+			//dead = true;
+			//GlobalManager.PlayerDied(playerNumber); //Notify global state manager that this player died
+			//Destroy(gameObject);
+		}
+	}
 
 	//Called when the player is defeated
 	public void Defeated()

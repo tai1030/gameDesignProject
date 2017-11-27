@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour {
-    public GameObject player;
     private Vector3 offset;
 
 	// Use this for initialization
 	void Start () {
-        offset = transform.position - player.transform.position;
-        transform.LookAt(player.transform);
+		offset = transform.position - GameManager.Instance.Player.transform.position;
+		transform.LookAt(GameManager.Instance.Player.transform);
 	}
 	
 	// Update is called once per frame
@@ -18,7 +17,11 @@ public class CameraController : MonoBehaviour {
 	}
 
     void LateUpdate()
-    {
-        transform.position = player.transform.position + offset;
+	{
+		if (GameManager.Instance.Player == null) {
+			transform.position = Vector3.zero + offset;
+		} else {
+			transform.position = GameManager.Instance.Player.transform.position + offset;
+		}
     }
 }
