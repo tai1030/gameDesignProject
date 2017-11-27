@@ -35,9 +35,6 @@ public class Player : MonoBehaviour {
     bool canMove = true; //Can the player move?
 	bool dead = false; //Is this player dead?
 
-	public float bx = 0.0f;
-	public float bz = 0.0f;
-
     private int bombs = 2; //Amount of bombs the player has left to drop, gets decreased as the player drops a bomb, increases as an owned bomb explodes
 
     //Prefabs
@@ -153,7 +150,7 @@ public class Player : MonoBehaviour {
 			Debug.Log ("Existed");
 			// Create new bomb and snap it to a tile
 			Instantiate(bombPrefab,
-				new Vector3(Mathf.RoundToInt(myTransform.position.x) - bx, bombPrefab.transform.position.y, Mathf.RoundToInt(myTransform.position.z) - bz),
+				new Vector3(Mathf.RoundToInt(myTransform.position.x), bombPrefab.transform.position.y, Mathf.RoundToInt(myTransform.position.z)),
 				bombPrefab.transform.rotation);
         }
     }
