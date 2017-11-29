@@ -5,10 +5,7 @@ using UnityEngine;
 public class map : MonoBehaviour {
 
 	public GameObject brick;
-    public GameObject box;
-
 	private List<GameObject> bricks;
-	private List<GameObject> boxes;
 
 	// Use this for initialization
 	void Start () {
@@ -19,16 +16,16 @@ public class map : MonoBehaviour {
 			GameObject brick2 = Instantiate(brick, new Vector3(-14, 0.5f, -i), Quaternion.identity);
 			GameObject brick3 = Instantiate(brick, new Vector3(-i, 0.5f, 0), Quaternion.identity);
 			GameObject brick4 = Instantiate(brick, new Vector3(-i, 0.5f, -15), Quaternion.identity);
-			bricks.Add(brick1);
-			bricks.Add(brick2);
-			bricks.Add(brick3);
-			bricks.Add(brick4);
+			//bricks.Add(brick1);
+			//bricks.Add(brick2);
+			//bricks.Add(brick3);
+			//bricks.Add(brick4);
         }
 
 		GameObject brick5 = Instantiate(brick, new Vector3(1, 0.5f, -15), Quaternion.identity);
 		GameObject brick6 = Instantiate(brick, new Vector3(-14, 0.5f, -15), Quaternion.identity);
-		bricks.Add(brick5);
-		bricks.Add(brick6);
+		//bricks.Add(brick5);
+		//bricks.Add(brick6);
 
 		for (int i = 1; i <= 4; i++) {
 			GameObject brick7 = Instantiate(brick, new Vector3(-2, 0.5f, -i * 3), Quaternion.identity);
@@ -41,8 +38,42 @@ public class map : MonoBehaviour {
 			bricks.Add(brick9);
 			bricks.Add(brick10);
 		}
+
+
+        createItemList(bricks);
 	}
-	
+
+
+    private void createItemList(List<GameObject> brickList)
+    {
+        List<BrickController.ITEM> itemList = new List<BrickController.ITEM>();
+        itemList.Add(BrickController.ITEM.KEY);
+        for (int i = 1; i < brickList.Count; i++){
+            switch (i % 3)
+            {
+                case 0:
+                    itemList.Add(BrickController.ITEM.SPEED);
+                    break;
+                case 1:
+                    itemList.Add(BrickController.ITEM.FIRE);
+                    break;
+                case 2:
+                    itemList.Add(BrickController.ITEM.HP);
+                    break;
+            }
+        }
+        foreach (GameObject brickA in brickList)
+        {
+            int index = Random.Range(0, itemList.Count);
+            brickA.GetComponent<BrickController>().item = itemList[index];
+            itemList.RemoveAt(index);
+        }
+        foreach (GameObject brickA in brickList)
+        {
+            Debug.Log(brickA.transform + ":" +  brickA.GetComponent<BrickController>().item);
+        }
+
+    }	
 	// Update is called once per frame
 	void Update () {
 		
