@@ -22,12 +22,20 @@ public class EnemyMovement : MonoBehaviour
 	bool isRunningAway;												//Is the enemy running away?
 	Vector3 runAwayPosition;										//Where the enemy runs if they are hit with a stink attack
 
-	static WaitForSeconds updateDelay = new WaitForSeconds(.5f);	//The delay between updating the navmesh agent (for efficiency). Since
-																	//all enemies have the same delay, this is declared as 'static' so all
-																	//enemies share the same one (saves on memory)
+	static WaitForSeconds updateDelay = new WaitForSeconds(.5f);    //The delay between updating the navmesh agent (for efficiency). Since
+                                                                    //all enemies have the same delay, this is declared as 'static' so all
+                                                                    //enemies share the same one (saves on memory)
 
-	//Reset() defines the default values for properties in the inspector
-	void Reset ()
+    public GameObject player;
+
+    void Start()
+    {
+        Reset();
+        OnEnable();
+    }
+
+    //Reset() defines the default values for properties in the inspector
+    void Reset ()
 	{
 		//Grab references to the needed components
 		navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
@@ -40,27 +48,23 @@ public class EnemyMovement : MonoBehaviour
 		//Enabled the nav mesh agent
 		navMeshAgent.enabled = true;
 		isRunningAway = false;
-		//Start the ChasePlayer coroutine
+        //Start the ChasePlayer coroutine
+        Debug.Log("Start ChasePlayer");
 		StartCoroutine("ChasePlayer");
+        Debug.Log("End ChasePlayer");
+
 	}
 
 	//This coroutine updates the navmesh agent to chase the player
 	IEnumerator ChasePlayer ()
 	{
-		//Start by waiting a single frame to give the game a chance to initialize.
-		//This is usefull if you start with an enemy in the scene (instead of spawning it)
-		yield return null;
-
-		//If there is no GameManager, leave this coroutine permanently (that's 
-		//what 'yield break' does
-		if (GameManager.Instance == null)
-			yield break;
-
+        Debug.Log("ChasePlayer");
 		//While the navmesh agent is enabled...
 		while (navMeshAgent.enabled)
 		{
-			//...get the target from the GameManager...
-			Transform target = GameManager.Instance.EnemyTarget;
+            Debug.Log("ChasePlayer true");
+            //...get the target from the GameManager...
+            Transform target = player.transform;
 			//...and if the enemy is running away, head towards the run away position...
 			if (isRunningAway)
 				navMeshAgent.SetDestination(runAwayPosition);
