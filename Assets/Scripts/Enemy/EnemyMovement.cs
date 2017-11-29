@@ -49,20 +49,16 @@ public class EnemyMovement : MonoBehaviour
 		navMeshAgent.enabled = true;
 		isRunningAway = false;
         //Start the ChasePlayer coroutine
-        Debug.Log("Start ChasePlayer");
 		StartCoroutine("ChasePlayer");
-        Debug.Log("End ChasePlayer");
 
 	}
 
 	//This coroutine updates the navmesh agent to chase the player
 	IEnumerator ChasePlayer ()
 	{
-        Debug.Log("ChasePlayer");
 		//While the navmesh agent is enabled...
 		while (navMeshAgent.enabled)
 		{
-            Debug.Log("ChasePlayer true");
             //...get the target from the GameManager...
             Transform target = player.transform;
 			//...and if the enemy is running away, head towards the run away position...
