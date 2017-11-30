@@ -6,14 +6,18 @@ public class BrickController : MonoBehaviour {
     public enum ITEM { KEY, SPEED, FIRE, HP, NULL };
     public ITEM item = ITEM.NULL;
     private bool isItemActive = false;
+    private ParticleSystem ps;
+    public bool psEnabled;
 
 	// Use this for initialization
 	void Start () {
-		
+        ps = GetComponent<ParticleSystem>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        var emission = ps.emission;
+        emission.enabled = psEnabled;
 
 	}
 
@@ -58,18 +62,23 @@ public class BrickController : MonoBehaviour {
 
     IEnumerator setItemActive()
     {
+        psEnabled = true;
         switch (item)
         {
             case ITEM.KEY:
+                ps.startColor = new Color(0, 128, 0);
                 GetComponent<Renderer>().material.color = new Color(0, 128, 0);//green
                 break;
             case ITEM.SPEED:
+                ps.startColor = new Color(0, 0, 255);
                 GetComponent<Renderer>().material.color = new Color(0, 0, 255);//blue
                 break;
             case ITEM.FIRE:
+                ps.startColor = new Color(255, 165, 0);
                 GetComponent<Renderer>().material.color = new Color(255, 165, 0);//orange
                 break;
             case ITEM.HP:
+                ps.startColor = new Color(255, 0, 0);
                 GetComponent<Renderer>().material.color = new Color(255, 0, 0);//red
                 break;
             case ITEM.NULL:
