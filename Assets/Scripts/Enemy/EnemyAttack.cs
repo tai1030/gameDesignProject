@@ -56,6 +56,11 @@ public class EnemyAttack : MonoBehaviour
 			//Record that the player is in range
 			playerInRange = true;
 		}
+
+        if (other.gameObject.name == "Explosion(Clone)")
+        {
+            Destroy(this.gameObject);
+        }
 	}
 
 	//When the player leaves the trigger collider this is called
@@ -70,8 +75,16 @@ public class EnemyAttack : MonoBehaviour
 		}
 	}
 
-	//This coroutine checks to see if the enemy can attack the player at a set time interval
-	IEnumerator AttackPlayer()
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Explosion(Clone)")
+        {
+            Debug.Log("    Hello test test test");
+        }
+    }
+
+    //This coroutine checks to see if the enemy can attack the player at a set time interval
+    IEnumerator AttackPlayer()
 	{
 		//Start by waiting a single frame to give the game a chance to initialize.
 		//This is usefull if you start with an enemy in the scene (instead of spawning it)
