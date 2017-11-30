@@ -189,6 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brick: {fileID: 1066705725044386, guid: 91021b28ef4e72245803394538789af4, type: 2}
+  level: 1
 --- !u!54 &75328868
 Rigidbody:
   m_ObjectHideFlags: 0
