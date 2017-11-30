@@ -30,10 +30,11 @@ public class Bomb : MonoBehaviour {
 	public GameObject explosionPrefab; 
 	public LayerMask levelMask; // This LayerMask makes sure the rays cast to check for free spaces only hits the blocks in the level
 	private bool exploded = false;
-    public int range = 3;
+    public int range;
 
 	// Use this for initialization
 	void Start() {
+        range = 3;
 		Invoke("Explode", 3f); //Call Explode in 3 seconds
 	}
 

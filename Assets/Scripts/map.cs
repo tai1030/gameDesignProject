@@ -6,6 +6,7 @@ public class map : MonoBehaviour {
 
 	public GameObject brick;
 	private List<GameObject> bricks;
+    public int level;
 
 	// Use this for initialization
 	void Start () {
@@ -49,7 +50,7 @@ public class map : MonoBehaviour {
         List<BrickController.ITEM> itemList = new List<BrickController.ITEM>();
         itemList.Add(BrickController.ITEM.KEY);
         for (int i = 1; i < brickList.Count; i++){
-            switch (i % 3)
+            switch (i % (level + 3))
             {
                 case 0:
                     itemList.Add(BrickController.ITEM.SPEED);
@@ -59,6 +60,9 @@ public class map : MonoBehaviour {
                     break;
                 case 2:
                     itemList.Add(BrickController.ITEM.HP);
+                    break;
+                default:
+                    itemList.Add(BrickController.ITEM.EMTPY);
                     break;
             }
         }

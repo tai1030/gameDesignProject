@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BrickController : MonoBehaviour {
-    public enum ITEM { KEY, SPEED, FIRE, HP, NULL };
+    public enum ITEM { KEY, SPEED, FIRE, HP, NULL, EMTPY };
     public ITEM item = ITEM.NULL;
     private bool isItemActive = false;
     private ParticleSystem ps;
@@ -51,8 +51,12 @@ public class BrickController : MonoBehaviour {
         Debug.Log(item);
         if(item != ITEM.NULL){
 			if (other.CompareTag("Explosion")) {
-                if(isItemActive){
-                    Destroy(this.gameObject);
+                if(isItemActive)
+                {
+                    if (item != ITEM.KEY)
+                    {
+                        Destroy(this.gameObject);
+                    }
                 }else{
                     StartCoroutine(setItemActive());
                 }
@@ -81,7 +85,8 @@ public class BrickController : MonoBehaviour {
                 ps.startColor = new Color(255, 0, 0);
                 GetComponent<Renderer>().material.color = new Color(255, 0, 0);//red
                 break;
-            case ITEM.NULL:
+            case ITEM.EMTPY:
+                Destroy(this.gameObject);
                 break;
         }
         yield return new WaitForSeconds(1);
