@@ -189,7 +189,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brick: {fileID: 1066705725044386, guid: 91021b28ef4e72245803394538789af4, type: 2}
-  box: {fileID: 111078, guid: 038c874aea1642e47baca1d90b641841, type: 2}
 --- !u!54 &75328868
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -691,6 +690,14 @@ Prefab:
       propertyPath: player
       value: 
       objectReference: {fileID: 1416834608}
+    - target: {fileID: 19558534, guid: 20dfe398ca6c6984498a8cf9bfcd10ca, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11473272, guid: 20dfe398ca6c6984498a8cf9bfcd10ca, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 20dfe398ca6c6984498a8cf9bfcd10ca, type: 2}
   m_IsPrefabParent: 0
