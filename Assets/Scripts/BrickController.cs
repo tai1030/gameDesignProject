@@ -32,13 +32,13 @@ public class BrickController : MonoBehaviour {
                         //do Something
                         break;
                     case ITEM.SPEED:
-                        //do Something
+                        collision.gameObject.GetComponent<PlayerMovement>().speed += 1;
                         break;
                     case ITEM.FIRE:
-                        //do Something
+                        collision.gameObject.GetComponent<PlayerMovement>().bombPrefab.gameObject.GetComponent<Bomb>().range += 1;
                         break;
                     case ITEM.HP:
-                        //do Something
+                        collision.gameObject.GetComponent<PlayerHealth>().currentHealth += 10;
                         break;
                 }
                 Destroy(this.gameObject);

@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 	[HideInInspector] public Vector3 MoveDirection = Vector3.zero;		//The direction the player should move
 	[HideInInspector] public Vector3 LookDirection = Vector3.forward;	//The direction the player should face
 
-	[SerializeField] float speed = 6f;									//The speed that the player moves
+	public float speed = 6f;									//The speed that the player moves
 	[SerializeField] Animator animator;									//Reference to the animator component
 	[SerializeField] Rigidbody rigidBody;								//Reference to the rigidbody component
 

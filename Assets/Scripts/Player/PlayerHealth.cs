@@ -24,7 +24,7 @@ public class PlayerHealth : MonoBehaviour
 	[Header("Debugging Properties")]				
 	[SerializeField] bool isInvulnerable = false;		//Is the player invulnerable? Useful for debugging so the player won't take damage
 
-	int currentHealth;									//The current health of the player
+	public int currentHealth;									//The current health of the player
 
 	//Reset() defines the default values for properties in the inspector
 	void Reset ()
