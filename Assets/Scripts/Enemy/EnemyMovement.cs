@@ -64,6 +64,9 @@ public class EnemyMovement : MonoBehaviour
 		{
             //Debug.Log("ChasePlayer true");
             //...get the target from the GameManager...
+			if(player == null){
+				yield break;
+			}
             Transform target = player.transform;
 			//...and if the enemy is running away, head towards the run away position...
 			if (isRunningAway)

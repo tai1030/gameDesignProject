@@ -6,7 +6,9 @@ public class map : MonoBehaviour {
 
 	public GameObject brick;
 	private List<GameObject> bricks;
-    public int level;
+
+	[HideInInspector] public int maxLevel = 3;
+	public int level = 1;
 
 	// Use this for initialization
 	void Start () {

@@ -22,7 +22,10 @@ public class GameManager : MonoBehaviour
 
 	[Header("UI Properties")]
 	[SerializeField] Text infoText;					//Text UI element to show info to the player (info may be instructions or the player's score)
-	[SerializeField] Text gameoverText;				//Text UI element informing the player that they have lost
+	[SerializeField] Text gamemessageText;
+	[SerializeField] Text lifeText;
+	[SerializeField] Text timerText;
+	[SerializeField] Text levelText;
 
 	[Header("Player Selection Properties")]
 	[SerializeField] GameObject enemySpawners;		//The game object parent of all of the enemy spawners
@@ -32,6 +35,16 @@ public class GameManager : MonoBehaviour
 	[SerializeField] AllyManager allyManager;		//A reference to the attached ally manager script
 
 	int score = 0;									//The player's current score
+
+	[SerializeField]public static int life = 3;
+	[SerializeField]int maxLevel;
+	[SerializeField]int level;
+
+	float startTime;
+	[HideInInspector]public static float timer = 300; //5 mins
+	[HideInInspector]public bool isGameWin = false;
+	[HideInInspector]public bool isGameOver = false;
+	[HideInInspector]public bool isPlayerDied = false;
 
 	void Awake()
 	{
@@ -45,6 +58,39 @@ public class GameManager : MonoBehaviour
 			Destroy(this);
 	}
 
+	void Start(){
+		startTime = Time.time;
+		gamemessageText.enabled = false;
+
+		map m = FindObjectOfType<map> ();
+		level = m.level;
+		maxLevel = m.maxLevel;
+	}
+
+	void Update(){
+		float guiTime = timer - (Time.time - startTime);
+		isPlayerDied = Instance.Player.currentHealth <= 0;
+		if (!isGameOver && !isGameWin && !isPlayerDied && guiTime > 0) {
+			int minutes = (int)(guiTime / 60);
+			int seconds = (int)(guiTime % 60);
+
+			timerText.text = string.Format ("{0:00}:{1:00}", minutes, seconds);
+		}
+
+		if (!isGameOver && !isGameWin && !isPlayerDied && guiTime <= 0) {
+			Instance.Player.TakeDamage(100);
+		}
+
+		int numberOfEnemy = GameObject.FindGameObjectsWithTag ("Enemy").Length;
+		if (!isGameOver && !isGameWin && !isPlayerDied && numberOfEnemy <= 0) {
+			gameWin ();
+		}
+
+		if (isGameOver || isGameWin || isPlayerDied) {
+			Instance.Player.StopPlayerMove();
+		}
+	}
+
 	//Called by the PlayerSelect script when a player has been selected at the beginning of the game
 	public void PlayerChosen(PlayerHealth selected)
 	{
@@ -56,6 +102,10 @@ public class GameManager : MonoBehaviour
 		//If the info text UI element exists, tell it to say "Score: 0"
 		if(infoText != null)
 			infoText.text = "Score: 0";
+		if(lifeText != null)
+			lifeText.text = "Life: "+life;
+		if(levelText != null)
+			levelText.text = "L: "+level;
 
 		//If the enemy spawners game object exists, enable it
 		if(enemySpawners != null)
@@ -72,16 +122,31 @@ public class GameManager : MonoBehaviour
 		//The enemies no longer have a target
 		EnemyTarget = null;
 
-		//If the game over text UI element exists, turn it on
-		if(gameoverText != null)
-			gameoverText.enabled = true;
+		if (life - 1 < 0) {
+			life = 0;
+			isGameOver = true;
+			if (gamemessageText != null) {
+				gamemessageText.text = "Game Over!";
+				gamemessageText.enabled = true;
+			}
+		} else {
+			life -= 1;
+			if (gamemessageText != null) {
+				gamemessageText.text = "Lose! Plase try again!";
+				gamemessageText.enabled = true;
+			}
+			if(lifeText != null)
+				lifeText.text = "Life: "+life;
+		}
 	}
 
 	//Called from the PlayerHealth script when the player is done playing their death animation
 	public void PlayerDeathComplete()
 	{
 		//Call the ReloadScene() method after the set delay
-		Invoke("ReloadScene", delayOnPlayerDeath);
+		if (!isGameOver) {
+			Invoke ("ReloadScene", delayOnPlayerDeath);
+		}
 	}
 
 	//Called from the EnemyHealth script when an enemy is defeated
@@ -112,6 +177,22 @@ public class GameManager : MonoBehaviour
 			EnemyTarget = ally.transform;
 			//...and call UnsummonAlly() after a set delay
 			Invoke("UnSummonAlly", ally.Duration);
+		}
+	}
+
+	public void gameWin(){
+		isGameWin = true;
+		if (level + 1 > maxLevel) {
+			if (gamemessageText != null) {
+				gamemessageText.text = "Game Win! All levels have been completed!!";
+				gamemessageText.enabled = true;
+			}
+		} else {
+			if (gamemessageText != null) {
+				level += 1;
+				gamemessageText.text = "Win! Level "+level+" unlock!!";
+				gamemessageText.enabled = true;
+			}
 		}
 	}
 

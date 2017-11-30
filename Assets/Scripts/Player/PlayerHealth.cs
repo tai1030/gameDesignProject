@@ -15,16 +15,16 @@ public class PlayerHealth : MonoBehaviour
 
 	[Header("Components")]
 	[SerializeField] Animator animator;					//Reference to the animator component
-	[SerializeField] AudioSource audioSource;			//Reference to the audio source component	
-	
+	[SerializeField] AudioSource audioSource;			//Reference to the audio source component
+
 	[Header("UI")]
 	[SerializeField] FlashFade damageImage;				//Reference to the FlashFade script on the DamageImage UI element
 	[SerializeField] Slider healthSlider;				//The slider that will represent the player's health
-		
-	[Header("Debugging Properties")]				
+
+	[Header("Debugging Properties")]
 	[SerializeField] bool isInvulnerable = false;		//Is the player invulnerable? Useful for debugging so the player won't take damage
 
-	public int currentHealth;									//The current health of the player
+	[HideInInspector] public int currentHealth;			//The current health of the player
 
 	//Reset() defines the default values for properties in the inspector
 	void Reset ()
@@ -88,6 +88,11 @@ public class PlayerHealth : MonoBehaviour
 	{
 		//If the currentHealth is above 0 return true (the player is alive), otherwise return false
 		return currentHealth > 0;
+	}
+
+	public void StopPlayerMove(){
+		if (playerMovement != null)
+			playerMovement.Defeated();
 	}
 
 	//This method is called by an event in the Death animation on the player

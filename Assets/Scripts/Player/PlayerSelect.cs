@@ -26,6 +26,11 @@ public class PlayerSelect : MonoBehaviour
 		animator = GetComponent<Animator> ();
 	}
 
+	void Start(){
+		//Tell this GameManager that this is the chosen player
+		GameManager.Instance.PlayerChosen (playerHealth);
+	}
+
 	//This is called when the mouse is clicked down and then released while the cursor is over this 
 	//game object's collider
 	void OnMouseUp()
@@ -38,7 +43,7 @@ public class PlayerSelect : MonoBehaviour
 				return;
 		#endif
 		//Tell this GameManager that this is the chosen player
-		GameManager.Instance.PlayerChosen (playerHealth);
+		//GameManager.Instance.PlayerChosen (playerHealth);
 
 		//If there is another player, tell it that it wasn't selected
 		if(otherCharacter != null)
