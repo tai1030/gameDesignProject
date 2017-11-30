@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 8210114}
   - component: {fileID: 5411058}
   - component: {fileID: 114180641282739256}
-  - component: {fileID: 208445032842114078}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +30,7 @@ GameObject:
   - component: {fileID: 426346}
   - component: {fileID: 19868156}
   - component: {fileID: 19977312}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +47,7 @@ GameObject:
   - component: {fileID: 454698}
   - component: {fileID: 6558968}
   - component: {fileID: 11478302}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3614,19 +3613,3 @@ MonoBehaviour:
   levelMask:
     serializedVersion: 2
     m_Bits: 1024
-  attackDamage: 100
---- !u!208 &208445032842114078
-NavMeshObstacle:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 124052}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.0050000004, y: 0.0050000004, z: 0.007}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.001}
-  m_TimeToStationary: 0.5

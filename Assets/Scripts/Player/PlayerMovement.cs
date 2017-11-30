@@ -86,7 +86,18 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
+	public void OnTriggerEnter(Collider other) {
+		if(other.tag == "Enemy"){
+			Debug.Log(this.gameObject.name);
+		}
+		if (other.CompareTag("Explosion")) {
+			Debug.Log("Player hit by explosion!");
 
+			//dead = true;
+			//GlobalManager.PlayerDied(playerNumber); //Notify global state manager that this player died
+			//Destroy(gameObject);
+		}
+	}
 
 	//Called when the player is defeated
 	public void Defeated()
