@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brick: {fileID: 1066705725044386, guid: 91021b28ef4e72245803394538789af4, type: 2}
+  maxLevel: 3
   level: 1
 --- !u!54 &75328868
 Rigidbody:
@@ -969,6 +970,10 @@ Prefab:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 11411212, guid: 20dfe398ca6c6984498a8cf9bfcd10ca, type: 2}
+      propertyPath: attackDamage
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 20dfe398ca6c6984498a8cf9bfcd10ca, type: 2}
   m_IsPrefabParent: 0
@@ -1134,9 +1139,11 @@ MonoBehaviour:
   enemySpawners: {fileID: 0}
   cameraAnimator: {fileID: 0}
   allyManager: {fileID: 0}
+  maxLevel: 0
   level: 1
   isGameWin: 0
   isGameOver: 0
+  isPlayerDied: 0
 --- !u!1 &1760265639
 GameObject:
   m_ObjectHideFlags: 0
