@@ -19,7 +19,7 @@ public class BrickController : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Boy")
+		if (collision.gameObject.CompareTag("Player"))
         {
             if(isItemActive){
                 switch (item)
@@ -46,8 +46,7 @@ public class BrickController : MonoBehaviour {
     {
         Debug.Log(item);
         if(item != ITEM.NULL){
-            if (other.gameObject.name == "Explosion(Clone)")
-            {
+			if (other.CompareTag("Explosion")) {
                 if(isItemActive){
                     Destroy(this.gameObject);
                 }else{

@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
 
 	bool canMove = true;												//Can the player move?
 
+	[HideInInspector] PlayerHealth playerHealth;						//Reference to the player's health script
+
 	[SerializeField] public KeyCode KeyUp, KeyDown, KeyLeft, KeyRight, KepDrop;
 
 	//Prefabs
@@ -87,15 +89,14 @@ public class PlayerMovement : MonoBehaviour
 	}
 
 	public void OnTriggerEnter(Collider other) {
-		if(other.tag == "Enemy"){
-			Debug.Log(this.gameObject.name);
-		}
 		if (other.CompareTag("Explosion")) {
-			Debug.Log("Player hit by explosion!");
-
-			//dead = true;
-			//GlobalManager.PlayerDied(playerNumber); //Notify global state manager that this player died
-			//Destroy(gameObject);
+			playerHealth = this.GetComponent<PlayerHealth>();
+			//...if the script exists...
+			if (playerHealth != null)
+			{
+				//...tell the enemy to take damage
+				playerHealth.TakeDamage(100);
+			}
 		}
 	}
 

@@ -18,6 +18,8 @@ public class EnemyAttack : MonoBehaviour
 	bool playerInRange;										//Is the player in range?
 	WaitForSeconds attackDelay;								//Variable to hold the attack delay
 
+	[HideInInspector] EnemyHealth enemyHealth;				//Reference to the enemy's health script
+
 	//Reset() defines the default values for properties in the inspector
 	void Reset()
 	{
@@ -34,7 +36,7 @@ public class EnemyAttack : MonoBehaviour
 	//When this game object is enabled...
 	void OnEnable()
 	{
-		//Remove any existing debuff and allow the enemy to attack (in 
+		//Remove any existing debuff and allow the enemy to attack (in
 		//case the enemy was defeated with a slime debuff still on it)
 		SlimeDebuff = null;
 		canAttack = true;
@@ -57,9 +59,15 @@ public class EnemyAttack : MonoBehaviour
 			playerInRange = true;
 		}
 
-        if (other.gameObject.name == "Explosion(Clone)")
+		if (other.CompareTag("Explosion"))
         {
-            Destroy(this.gameObject);
+			enemyHealth = this.GetComponent<EnemyHealth>();
+			//...if the script exists...
+			if (enemyHealth != null)
+			{
+				//...tell the enemy to take damage
+				enemyHealth.TakeDamage(100);
+			}
         }
 	}
 
@@ -90,7 +98,7 @@ public class EnemyAttack : MonoBehaviour
 		//This is usefull if you start with an enemy in the scene (instead of spawning it)
 		yield return null;
 
-		//If there is no GameManager, leave this coroutine permanently (that's 
+		//If there is no GameManager, leave this coroutine permanently (that's
 		//what 'yield break' does
 		if (GameManager.Instance == null)
 			yield break;
@@ -99,7 +107,7 @@ public class EnemyAttack : MonoBehaviour
 		while (canAttack && CheckPlayerStatus())
 		{
 			//...and if the player is in range and the enemy isn't slimed...
-			if (playerInRange && SlimeDebuff == null) 
+			if (playerInRange && SlimeDebuff == null)
 			{
 				//...Tell the player to take damage. Note that we route enemy damage
 				//through to GameManager in case we want to do any modification or validation
