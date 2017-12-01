@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BrickController : MonoBehaviour {
-    public enum ITEM { KEY, SPEED, FIRE, HP, NULL, EMTPY };
+    public enum ITEM { KEY, SPEED, FIRE, HP, NULL, EMTPY, ZOMBIE };
     public ITEM item = ITEM.NULL;
     private bool isItemActive = false;
+    private bool isZombleActive = false;
     private ParticleSystem ps;
+    private map m;
     public bool psEnabled;
 
 	// Use this for initialization
 	void Start () {
         ps = GetComponent<ParticleSystem>();
+        m = FindObjectOfType<map>();
 	}
 	
 	// Update is called once per frame
@@ -88,6 +91,18 @@ public class BrickController : MonoBehaviour {
             case ITEM.HP:
                 ps.startColor = new Color(255, 0, 0);
                 GetComponent<Renderer>().material.color = new Color(255, 0, 0);//red
+                break;
+            case ITEM.ZOMBIE:
+                if (!isZombleActive)
+                {
+                    isZombleActive = true;
+                    yield return new WaitForSeconds(1);
+
+                    GameObject zomble1 = Instantiate(m.zomble, this.transform.position, Quaternion.identity);
+                    zomble1.GetComponent<EnemyMovement>().player = m.player;
+
+                    Destroy(this.gameObject);
+                }
                 break;
             case ITEM.EMTPY:
                 Destroy(this.gameObject);

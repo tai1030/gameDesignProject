@@ -4,13 +4,38 @@ using UnityEngine;
 
 public class map : MonoBehaviour {
 
+
+    public GameObject player;
 	public GameObject brick;
+    public GameObject zomble;
 	private List<GameObject> bricks;
 
 	[HideInInspector] public int maxLevel = 3;
 
 	// Use this for initialization
 	void Start () {
+        if (GameManager.level == 1)
+        {
+            GameObject zomble1 = Instantiate(zomble, new Vector3(0, 0, -14), Quaternion.identity);
+            zomble1.GetComponent<EnemyMovement>().player = player;
+        }
+        else if (GameManager.level == 2)
+        {
+            GameObject zomble1 = Instantiate(zomble, new Vector3(0, 0, -14), Quaternion.identity);
+            zomble1.GetComponent<EnemyMovement>().player = player;
+            GameObject zomble2 = Instantiate(zomble, new Vector3(-14, 0, -14), Quaternion.identity);
+            zomble2.GetComponent<EnemyMovement>().player = player;
+        }
+        else if (GameManager.level == 3)
+        {
+            GameObject zomble1 = Instantiate(zomble, new Vector3(0, 0, -14), Quaternion.identity);
+            zomble1.GetComponent<EnemyMovement>().player = player;
+            GameObject zomble2 = Instantiate(zomble, new Vector3(-14, 0, -14), Quaternion.identity);
+            zomble2.GetComponent<EnemyMovement>().player = player;
+            GameObject zomble3 = Instantiate(zomble, new Vector3(-14, 0, -1), Quaternion.identity);
+            zomble3.GetComponent<EnemyMovement>().player = player;
+        }
+
 		bricks = new List<GameObject>();
 		for (int i = 0; i <= 14; i++)
         {
@@ -59,7 +84,7 @@ public class map : MonoBehaviour {
         List<BrickController.ITEM> itemList = new List<BrickController.ITEM>();
         itemList.Add(BrickController.ITEM.KEY);
         for (int i = 1; i < brickList.Count; i++){
-            switch (i % (GameManager.level * 2 + 6))
+            switch (i % (GameManager.level * 2 + 3))
             {
                 case 0:
                     itemList.Add(BrickController.ITEM.SPEED);
@@ -69,6 +94,27 @@ public class map : MonoBehaviour {
                     break;
                 case 2:
                     itemList.Add(BrickController.ITEM.HP);
+                    break;
+                case 3:
+                    itemList.Add(BrickController.ITEM.ZOMBIE);
+                    break;
+                case 4:
+                    if (GameManager.level >= 2)
+                    {
+                        itemList.Add(BrickController.ITEM.ZOMBIE);
+                    }else{
+                        itemList.Add(BrickController.ITEM.EMTPY);
+                    }
+                    break;
+                case 5:
+                    if (GameManager.level >= 3)
+                    {
+                        itemList.Add(BrickController.ITEM.ZOMBIE);
+                    }
+                    else
+                    {
+                        itemList.Add(BrickController.ITEM.EMTPY);
+                    }
                     break;
                 default:
                     itemList.Add(BrickController.ITEM.EMTPY);

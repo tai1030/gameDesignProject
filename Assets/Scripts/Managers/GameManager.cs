@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
 			gameWin ();
 		}
 
-		if (isGameOver || isGameWin || isPlayerDied) {
+		if (isGameOver || isPlayerDied) {
 			Instance.Player.StopPlayerMove();
 			if (audioSource.isPlaying) {
 				audioSource.Stop();
