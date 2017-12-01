@@ -55,12 +55,19 @@ public class Bomb : MonoBehaviour {
 		exploded = true; 
 		transform.Find("Collider").gameObject.SetActive(false); //Disable the collider
 		Destroy(gameObject,.3f); //Destroy the actual bomb in 0.3 seconds, after all coroutines have finished
+
+		GameManager.Instance.Player.AddPlayerBomb(1);
 	}
 
 	public void OnTriggerEnter(Collider other) {
 		if (!exploded && other.CompareTag("Explosion")) { //If not exploded yet and this bomb is hit by an explosion...
 			CancelInvoke("Explode"); //Cancel the already called Explode, else the bomb might explode twice 
 			Explode(); //Finally, explode!
+		}
+
+		if (other.CompareTag ("Enemy")) {
+			Destroy (gameObject);
+			GameManager.Instance.Player.AddPlayerBomb(1);
 		}
 	}
 
@@ -79,6 +86,5 @@ public class Bomb : MonoBehaviour {
 
 			yield return new WaitForSeconds(.05f); //Wait 50 milliseconds before checking the next location
 		}
-
 	}
 }

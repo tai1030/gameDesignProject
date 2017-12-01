@@ -8,7 +8,12 @@ public class PlayerMovement : MonoBehaviour
 	[HideInInspector] public Vector3 MoveDirection = Vector3.zero;		//The direction the player should move
 	[HideInInspector] public Vector3 LookDirection = Vector3.forward;	//The direction the player should face
 
-	public float speed = 6f;									//The speed that the player moves
+	int maxBombs = 5;
+	[HideInInspector] public int bombs;
+
+	float maxSpeed = 8f;
+	[HideInInspector] public float speed;											//The speed that the player moves
+
 	[SerializeField] Animator animator;									//Reference to the animator component
 	[SerializeField] Rigidbody rigidBody;								//Reference to the rigidbody component
 
@@ -17,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
 	[HideInInspector] PlayerHealth playerHealth;						//Reference to the player's health script
 
 	[SerializeField] public KeyCode KeyUp, KeyDown, KeyLeft, KeyRight, KepDrop;
+
+	bool isDropingBomb = false;
 
 	//Prefabs
 	public GameObject bombPrefab;
@@ -27,6 +34,12 @@ public class PlayerMovement : MonoBehaviour
 		//Grab the needed component references
 		animator = GetComponent <Animator> ();
 		rigidBody = GetComponent <Rigidbody> ();
+	}
+
+	void Start(){
+
+		bombs = 3;
+		speed = 3f;
 	}
 
 	// Update is called once per frame
@@ -70,6 +83,9 @@ public class PlayerMovement : MonoBehaviour
 		if (Input.GetKeyDown(KepDrop)) { //Drop bomb
 			DropBomb();
 		}
+		if (Input.GetKeyUp(KepDrop)) {
+			isDropingBomb = false;
+		}
 	}
 
 	public void Move(Vector3 move){
@@ -80,11 +96,13 @@ public class PlayerMovement : MonoBehaviour
 	/// Drops a bomb beneath the player
 	/// </summary>
 	private void DropBomb() {
-		if (bombPrefab) { //Check if bomb prefab is assigned first
+		if (!isDropingBomb && bombPrefab && bombs > 0) { //Check if bomb prefab is assigned first
+			isDropingBomb = true;
 			// Create new bomb and snap it to a tile
 			Instantiate(bombPrefab,
 				new Vector3(Mathf.RoundToInt(rigidBody.position.x), bombPrefab.transform.position.y, Mathf.RoundToInt(rigidBody.position.z)),
 				bombPrefab.transform.rotation);
+			bombs -= 1;
 		}
 	}
 
@@ -105,6 +123,12 @@ public class PlayerMovement : MonoBehaviour
 	{
 		//Player can no longer move
 		canMove = false;
+	}
+
+	public void AddBomb(int b){
+		if (bombs + 1 <= maxBombs) {
+			bombs += 1;
+		}
 	}
 }
 

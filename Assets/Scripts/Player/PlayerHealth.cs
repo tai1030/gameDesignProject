@@ -95,6 +95,12 @@ public class PlayerHealth : MonoBehaviour
 			playerMovement.Defeated();
 	}
 
+	public void AddPlayerBomb(int b){
+		if (playerMovement != null) {
+			playerMovement.AddBomb (b);
+		}
+	}
+
 	//This method is called by an event in the Death animation on the player
 	void DeathComplete ()
 	{
