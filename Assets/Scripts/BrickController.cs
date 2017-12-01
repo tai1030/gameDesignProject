@@ -40,13 +40,12 @@ public class BrickController : MonoBehaviour {
                         collision.gameObject.GetComponent<PlayerMovement>().speed += 1;
                         GameManager.Instance.AddScore(10);
                         break;
-                    case ITEM.FIRE:
-                        collision.gameObject.GetComponent<PlayerMovement>().bombPrefab.gameObject.GetComponent<Bomb>().range += 1;
+					case ITEM.FIRE:
+						collision.gameObject.GetComponent<PlayerMovement>().explodeRange += 1;
                         GameManager.Instance.AddScore(10);
                         break;
                     case ITEM.HP:
-                        collision.gameObject.GetComponent<PlayerHealth>().currentHealth += 10;
-                        GameManager.Instance.AddScore(10);
+                        GameManager.Instance.AddScore(100);
                         break;
                 }
                 Destroy(this.gameObject);
@@ -56,7 +55,7 @@ public class BrickController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(item);
+        //Debug.Log(item);
         if(item != ITEM.NULL){
 			if (other.CompareTag("Explosion")) {
                 if(isItemActive)

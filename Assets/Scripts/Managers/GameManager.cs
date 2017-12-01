@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
 			gameWin ();
 		}
 
-		if (isGameOver || isPlayerDied) {
+		if (isGameOver || isPlayerDied || (isGameWin && numberOfEnemy <= 0)) {
 			Instance.Player.StopPlayerMove();
 			if (audioSource.isPlaying) {
 				audioSource.Stop();
@@ -189,7 +189,7 @@ public class GameManager : MonoBehaviour
 	}
 
 	public void gameWin(){
-        isGameWin = false;
+        isGameWin = true;
 		if (level + 1 > maxLevel) {
 			if (gamemessageText != null) {
 				gamemessageText.text = "Game Win! All levels have been completed!!";

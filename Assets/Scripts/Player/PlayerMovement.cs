@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
 	int maxBombs = 5;
 	[HideInInspector] public int bombs;
 
+	int maxExplodeRange = 6;
+	[HideInInspector] public int explodeRange;
+
 	float maxSpeed = 8f;
 	[HideInInspector] public float speed;											//The speed that the player moves
 
@@ -37,8 +40,8 @@ public class PlayerMovement : MonoBehaviour
 	}
 
 	void Start(){
-
 		bombs = 3;
+		explodeRange = 3;
 		speed = 3f;
 	}
 
@@ -126,9 +129,26 @@ public class PlayerMovement : MonoBehaviour
 	}
 
 	public void AddBomb(int b){
-		if (bombs + 1 <= maxBombs) {
-			bombs += 1;
+		if (bombs + b <= maxBombs) {
+			bombs += b;
+		} else {
+			bombs = maxBombs;
 		}
+	}
+
+	public void AddSpeed(float s){
+		if (speed + s <= maxSpeed) {
+			speed += s;
+		} else {
+			speed = maxSpeed;
+		}
+	}
+
+	public void AddExplodeRange(int r){
+		if (explodeRange + r <= maxExplodeRange)
+			explodeRange += r;
+		else
+			explodeRange = maxExplodeRange;
 	}
 }
 

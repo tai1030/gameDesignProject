@@ -74,7 +74,6 @@ public class map : MonoBehaviour {
             bricks.Add(brick14);
 		}
 
-
         createItemList(bricks);
 	}
 
@@ -127,12 +126,13 @@ public class map : MonoBehaviour {
             brickA.GetComponent<BrickController>().item = itemList[index];
             itemList.RemoveAt(index);
         }
-        foreach (GameObject brickA in brickList)
-        {
-            Debug.Log(brickA.transform + ":" +  brickA.GetComponent<BrickController>().item);
-        }
+        //foreach (GameObject brickA in brickList)
+        //{
+        //    Debug.Log(brickA.transform + ":" +  brickA.GetComponent<BrickController>().item);
+        //}
 
-    }	
+    }
+
 	// Update is called once per frame
 	void Update () {
 		

@@ -30,11 +30,13 @@ public class Bomb : MonoBehaviour {
 	public GameObject explosionPrefab; 
 	public LayerMask levelMask; // This LayerMask makes sure the rays cast to check for free spaces only hits the blocks in the level
 	private bool exploded = false;
-    public int range;
+
+    int range;
 
 	// Use this for initialization
 	void Start() {
-        range = 3;
+		range = GameManager.Instance.Player.GetComponent<PlayerMovement>().explodeRange;
+		Debug.Log (range);
 		Invoke("Explode", 3f); //Call Explode in 3 seconds
 	}
 
@@ -72,6 +74,7 @@ public class Bomb : MonoBehaviour {
 	}
 
 	private IEnumerator CreateExplosions(Vector3 direction) {
+		Debug.Log (range);
         for (int i = 1; i < range; i++) { //The 3 here dictates how far the raycasts will check, in this case 3 tiles far
 			RaycastHit hit; //Holds all information about what the raycast hits
 
