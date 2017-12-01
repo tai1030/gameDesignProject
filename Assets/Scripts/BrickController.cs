@@ -29,16 +29,20 @@ public class BrickController : MonoBehaviour {
                 switch (item)
                 {
                     case ITEM.KEY:
-                        //do Something
+                        GameManager.Instance.isGameWin = true;
+                        GameManager.Instance.AddScore(100);
                         break;
                     case ITEM.SPEED:
                         collision.gameObject.GetComponent<PlayerMovement>().speed += 1;
+                        GameManager.Instance.AddScore(10);
                         break;
                     case ITEM.FIRE:
                         collision.gameObject.GetComponent<PlayerMovement>().bombPrefab.gameObject.GetComponent<Bomb>().range += 1;
+                        GameManager.Instance.AddScore(10);
                         break;
                     case ITEM.HP:
                         collision.gameObject.GetComponent<PlayerHealth>().currentHealth += 10;
+                        GameManager.Instance.AddScore(10);
                         break;
                 }
                 Destroy(this.gameObject);

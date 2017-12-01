@@ -8,7 +8,6 @@ public class map : MonoBehaviour {
 	private List<GameObject> bricks;
 
 	[HideInInspector] public int maxLevel = 3;
-	public int level = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -35,11 +34,19 @@ public class map : MonoBehaviour {
 			GameObject brick8 = Instantiate(brick, new Vector3(-5, 0.5f, -i * 3), Quaternion.identity);
 			GameObject brick9 = Instantiate(brick, new Vector3(-8, 0.5f, -i * 3), Quaternion.identity);
 			GameObject brick10 = Instantiate(brick, new Vector3(-11, 0.5f, -i * 3), Quaternion.identity);
+            GameObject brick11 = Instantiate(brick, new Vector3(-1, 0.5f, -i * 3 -1), Quaternion.identity);
+            GameObject brick12 = Instantiate(brick, new Vector3(-4, 0.5f, -i * 3 -1), Quaternion.identity);
+            GameObject brick13 = Instantiate(brick, new Vector3(-7, 0.5f, -i * 3 -1), Quaternion.identity);
+            GameObject brick14 = Instantiate(brick, new Vector3(-10, 0.5f, -i * 3 -1), Quaternion.identity);
 
 			bricks.Add(brick7);
 			bricks.Add(brick8);
 			bricks.Add(brick9);
 			bricks.Add(brick10);
+            bricks.Add(brick11);
+            bricks.Add(brick12);
+            bricks.Add(brick13);
+            bricks.Add(brick14);
 		}
 
 
@@ -52,7 +59,7 @@ public class map : MonoBehaviour {
         List<BrickController.ITEM> itemList = new List<BrickController.ITEM>();
         itemList.Add(BrickController.ITEM.KEY);
         for (int i = 1; i < brickList.Count; i++){
-            switch (i % (level + 3))
+            switch (i % (GameManager.level * 2 + 6))
             {
                 case 0:
                     itemList.Add(BrickController.ITEM.SPEED);

@@ -11,7 +11,7 @@ public class EnemyHealth : MonoBehaviour
 
 	[Header("Health Properties")]
 	[SerializeField] int maxHealth = 100;				//How much health this enemy has
-	[SerializeField] int scoreValue = 10; 				//How many points this enemy is worth
+	[SerializeField] int scoreValue = 100; 				//How many points this enemy is worth
 
 	[Header("Defeated Effects")]
 	[SerializeField] float sinkSpeed = 2.5f;			//How fast the enemy sinks into the ground		
@@ -114,7 +114,7 @@ public class EnemyHealth : MonoBehaviour
 		enemyMovement.Defeated();
 
 		//Tell the game manager to give the player some points
-		GameManager.Instance.AddScore(scoreValue);
+		GameManager.Instance.AddScore(100);
 		//Call the TurnOff() method after a period of time
 		Invoke("TurnOff", deathEffectTime);
 	}

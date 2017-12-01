@@ -35,11 +35,11 @@ public class GameManager : MonoBehaviour
 	[Header("Ally Properties")]
 	[SerializeField] AllyManager allyManager;		//A reference to the attached ally manager script
 
-	int score = 0;									//The player's current score
+    [SerializeField]public static int score = 0;									//The player's current score
 
 	[SerializeField]public static int life = 3;
 	[SerializeField]int maxLevel;
-	[SerializeField]int level;
+	[SerializeField]public static int level = 1;
 
 	float startTime;
 	[HideInInspector]public static float timer = 300; //5 mins
@@ -60,12 +60,9 @@ public class GameManager : MonoBehaviour
 	}
 
 	void Start(){
+        maxLevel = 3;
 		startTime = Time.time;
 		gamemessageText.enabled = false;
-
-		map m = FindObjectOfType<map> ();
-		level = m.level;
-		maxLevel = m.maxLevel;
 	}
 
 	public void Play() {
@@ -87,7 +84,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		int numberOfEnemy = GameObject.FindGameObjectsWithTag ("Enemy").Length;
-		if (!isGameOver && !isGameWin && !isPlayerDied && numberOfEnemy <= 0) {
+		if (!isGameOver && isGameWin && !isPlayerDied && numberOfEnemy <= 0) {
 			gameWin ();
 		}
 
@@ -109,7 +106,7 @@ public class GameManager : MonoBehaviour
 
 		//If the info text UI element exists, tell it to say "Score: 0"
 		if(infoText != null)
-			infoText.text = "Score: 0";
+            infoText.text = "Score: " + score;
 		if(lifeText != null)
 			lifeText.text = "Life: "+life;
 		if(levelText != null)
@@ -189,7 +186,7 @@ public class GameManager : MonoBehaviour
 	}
 
 	public void gameWin(){
-		isGameWin = true;
+        isGameWin = false;
 		if (level + 1 > maxLevel) {
 			if (gamemessageText != null) {
 				gamemessageText.text = "Game Win! All levels have been completed!!";
@@ -200,6 +197,8 @@ public class GameManager : MonoBehaviour
 				level += 1;
 				gamemessageText.text = "Win! Level "+level+" unlock!!";
 				gamemessageText.enabled = true;
+                ReloadScene();
+                levelText.text = "L: " + level;
 			}
 		}
 	}
