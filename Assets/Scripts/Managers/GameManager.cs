@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] Text lifeText;
 	[SerializeField] Text timerText;
 	[SerializeField] Text levelText;
+	[SerializeField] public AudioSource audioSource;
 
 	[Header("Player Selection Properties")]
 	[SerializeField] GameObject enemySpawners;		//The game object parent of all of the enemy spawners
@@ -67,6 +68,10 @@ public class GameManager : MonoBehaviour
 		maxLevel = m.maxLevel;
 	}
 
+	public void Play() {
+		audioSource.transform.position = transform.position;
+	}
+
 	void Update(){
 		float guiTime = timer - (Time.time - startTime);
 		isPlayerDied = Instance.Player.currentHealth <= 0;
@@ -88,6 +93,9 @@ public class GameManager : MonoBehaviour
 
 		if (isGameOver || isGameWin || isPlayerDied) {
 			Instance.Player.StopPlayerMove();
+			if (audioSource.isPlaying) {
+				audioSource.Stop();
+			}
 		}
 	}
 

@@ -451,7 +451,8 @@ Prefab:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11407884, guid: 3a6182fe56bc9c54993c539ddec7be04, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 3a6182fe56bc9c54993c539ddec7be04, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &294969926
@@ -987,37 +988,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 113703823}
   m_Script: {fileID: 11500000, guid: c32067ea884548644b13cf9baddd4573, type: 3}
---- !u!54 &1416834616 stripped
-Rigidbody:
-  m_PrefabParentObject: {fileID: 5440604, guid: 3a6182fe56bc9c54993c539ddec7be04,
-    type: 2}
-  m_PrefabInternal: {fileID: 113703823}
---- !u!95 &1416834617 stripped
-Animator:
-  m_PrefabParentObject: {fileID: 9507390, guid: 3a6182fe56bc9c54993c539ddec7be04,
-    type: 2}
-  m_PrefabInternal: {fileID: 113703823}
---- !u!114 &1416834619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1416834608}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bd8ffa16d817be4bad533723d48a0b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalManager: {fileID: 0}
-  bombPrefab: {fileID: 124052, guid: 6291891f72f724c4eae6be6052e78735, type: 2}
-  speed: 3
-  animator: {fileID: 1416834617}
-  rigidBody: {fileID: 1416834616}
-  KeyUp: 119
-  KeyDown: 115
-  KeyLeft: 97
-  KeyRight: 100
-  KepDrop: 32
 --- !u!1 &1746192064
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,6 +1000,7 @@ GameObject:
   - component: {fileID: 1746192067}
   - component: {fileID: 1746192066}
   - component: {fileID: 1746192069}
+  - component: {fileID: 1746192070}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -1136,6 +1107,7 @@ MonoBehaviour:
   lifeText: {fileID: 1069454693}
   timerText: {fileID: 1760265641}
   levelText: {fileID: 294969927}
+  audioSource: {fileID: 1746192070}
   enemySpawners: {fileID: 0}
   cameraAnimator: {fileID: 0}
   allyManager: {fileID: 0}
@@ -1144,6 +1116,86 @@ MonoBehaviour:
   isGameWin: 0
   isGameOver: 0
   isPlayerDied: 0
+--- !u!82 &1746192070
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1746192064}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 351a4a9d16e7bc044a4026edb3d92400, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.501
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &1760265639
 GameObject:
   m_ObjectHideFlags: 0
