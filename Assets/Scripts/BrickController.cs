@@ -33,6 +33,7 @@ public class BrickController : MonoBehaviour {
                 {
                     case ITEM.KEY:
                         GameManager.Instance.isGameWin = true;
+                        GameManager.life += 1;
                         GameManager.Instance.AddScore(100);
                         break;
                     case ITEM.SPEED:

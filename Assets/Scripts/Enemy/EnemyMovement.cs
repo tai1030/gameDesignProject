@@ -47,6 +47,7 @@ public class EnemyMovement : MonoBehaviour
 	{
 		//Enabled the nav mesh agent
 		navMeshAgent.enabled = true;
+        navMeshAgent.speed = GameManager.level + 1;
 		isRunningAway = false;
         //Start the ChasePlayer coroutine
         //Debug.Log("Start ChasePlayer");

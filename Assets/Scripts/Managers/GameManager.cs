@@ -94,6 +94,8 @@ public class GameManager : MonoBehaviour
 				audioSource.Stop();
 			}
 		}
+        if (lifeText != null)
+            lifeText.text = "Life: " + life;
 	}
 
 	//Called by the PlayerSelect script when a player has been selected at the beginning of the game
@@ -136,6 +138,7 @@ public class GameManager : MonoBehaviour
 			}
 		} else {
 			life -= 1;
+            AddScore(-200);
 			if (gamemessageText != null) {
 				gamemessageText.text = "Lose! Plase try again!";
 				gamemessageText.enabled = true;
